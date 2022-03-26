@@ -9,13 +9,13 @@ let button = document.querySelector(".button");
 button.addEventListener("click", saveNote);
 
 function saveNote(event) {
-  let buttonOperationMode = button.dataset.work;
+  let buttonOperationMode = button.dataset.mode;
   let textFromField = textarea.value;
 
   if (buttonOperationMode === "save") createNewNote(textFromField);
   else if (buttonOperationMode === "update") updateOldNote(textFromField);
 
-  button.dataset.work = "save";
+  button.dataset.mode = "save";
   textarea.value = null;
 }
 let updateOldNote = (text) => (arrayOfNotes[numDownNote] = text);
@@ -45,7 +45,7 @@ let createItemLi = (numberLastNote) => {
   listNotes.appendChild(li);
 };
 function showTextNode(event) {
-  button.dataset.work = "update";
+  button.dataset.mode = "update";
 
   let li = this.parentElement;
   numDownNote = li.dataset.key - 1;
