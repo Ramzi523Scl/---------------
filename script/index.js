@@ -15,6 +15,11 @@ function saveNote(event) {
   if (buttonOperationMode === "save") createNewNote(textFromField);
   else if (buttonOperationMode === "update") updateOldNote(textFromField);
 
+  let activeSpan = listNotes.querySelector(
+    `li[data-key="${numDownNote + 1}"] span`
+  );
+  activeSpan.classList.remove("active");
+
   button.dataset.mode = "save";
   textarea.value = null;
 }
@@ -46,6 +51,7 @@ let createItemLi = (numberLastNote) => {
 };
 function showTextNode(event) {
   button.dataset.mode = "update";
+  this.classList.add("active");
 
   let li = this.parentElement;
   numDownNote = li.dataset.key - 1;
