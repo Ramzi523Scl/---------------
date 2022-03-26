@@ -1,4 +1,4 @@
-let arrayOfNotes = ["", "", ""];
+let arrayOfNotes = [];
 let numDownNote = 0;
 
 let listNotes = document.querySelector("#notes");
@@ -18,6 +18,8 @@ function saveNote(event) {
   button.dataset.work = "save";
   textarea.value = null;
 }
+let updateOldNote = (text) => (arrayOfNotes[numDownNote] = text);
+
 let createNewNote = (text) => {
   arrayOfNotes.push(text);
   let lengthArr = arrayOfNotes.length;
@@ -37,6 +39,7 @@ let createItemLi = (numberLastNote) => {
   let buttonRemoveSpan = document.createElement("span");
   buttonRemoveSpan.classList.add("remove");
   buttonRemoveSpan.innerHTML = "X";
+  buttonRemoveSpan.addEventListener("click", removeNote);
   li.appendChild(buttonRemoveSpan);
 
   listNotes.appendChild(li);
@@ -49,4 +52,8 @@ function showTextNode(event) {
   let textNote = arrayOfNotes[numDownNote];
   textarea.value = textNote;
 }
-let updateOldNote = (text) => (arrayOfNotes[numDownNote] = text);
+
+function removeNote(event) {
+  let li = this.parentElement;
+  li.remove();
+}
