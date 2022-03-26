@@ -1,4 +1,5 @@
 let arrayOfNotes = ["", "", ""];
+let numDownNote = 0;
 
 let listNotes = document.querySelector("#notes");
 
@@ -9,11 +10,12 @@ button.addEventListener("click", saveNote);
 
 function saveNote(event) {
   let buttonOperationMode = button.dataset.work;
+  let textFromField = textarea.value;
 
-  if (buttonOperationMode === "save") {
-    let textFromField = textarea.value;
-    createNewNote(textFromField);
-  }
+  if (buttonOperationMode === "save") createNewNote(textFromField);
+  else if (buttonOperationMode === "update") updateOldNote(textFromField);
+
+  button.dataset.work = "save";
   textarea.value = null;
 }
 let createNewNote = (text) => {
@@ -29,6 +31,7 @@ let createItemLi = (numberLastNote) => {
   let nameNoteSpan = document.createElement("span");
   nameNoteSpan.classList.add("open");
   nameNoteSpan.innerHTML = `Заметка №${numberLastNote}`;
+  nameNoteSpan.addEventListener("click", showTextNode);
   li.appendChild(nameNoteSpan);
 
   let buttonRemoveSpan = document.createElement("span");
@@ -38,3 +41,12 @@ let createItemLi = (numberLastNote) => {
 
   listNotes.appendChild(li);
 };
+function showTextNode(event) {
+  button.dataset.work = "update";
+
+  let li = this.parentElement;
+  numDownNote = li.dataset.key - 1;
+  let textNote = arrayOfNotes[numDownNote];
+  textarea.value = textNote;
+}
+let updateOldNote = (text) => (arrayOfNotes[numDownNote] = text);
