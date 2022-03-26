@@ -2,6 +2,7 @@ let arrayOfNotes = [];
 let numDownNote = 0;
 
 let listNotes = document.querySelector("#notes");
+let mode = document.querySelector(".mode");
 
 let textarea = document.querySelector(".textarea");
 let button = document.querySelector(".button");
@@ -19,6 +20,7 @@ function saveNote(event) {
     `li[data-key="${numDownNote + 1}"] span`
   );
   activeSpan.classList.remove("active");
+  mode.innerHTML = "Режим создания новой заметки";
 
   button.dataset.mode = "save";
   textarea.value = null;
@@ -52,7 +54,7 @@ let createItemLi = (numberLastNote) => {
 function showTextNode(event) {
   button.dataset.mode = "update";
   this.classList.add("active");
-
+  mode.innerHTML = "Режим редактирования заметки";
   let li = this.parentElement;
   numDownNote = li.dataset.key - 1;
   let textNote = arrayOfNotes[numDownNote];
