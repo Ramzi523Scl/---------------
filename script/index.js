@@ -13,7 +13,8 @@ function saveNote(event) {
   let buttonOperationMode = button.dataset.mode;
   let textFromField = textarea.value;
 
-  if (buttonOperationMode === "save") createNewNote(textFromField);
+  let isText = areAllCharectersSpaces(textarea.value);
+  if (buttonOperationMode === "save" && isText) createNewNote(textFromField);
   else if (buttonOperationMode === "update") updateOldNote(textFromField);
 
   let clicedNoteLinkName = `li[data-key="${numDownNote + 1}"] span`;
@@ -23,6 +24,14 @@ function saveNote(event) {
   changeMode("save");
   clearTextarea();
 }
+let areAllCharectersSpaces = (text) => {
+  let symbolsArr = text.split("");
+  for (let symbol of symbolsArr) {
+    if (symbol !== " ") return true;
+  }
+  return false;
+};
+
 let createNewNote = (text) => {
   arrayOfNotes.push(text);
   let lengthArr = arrayOfNotes.length;
