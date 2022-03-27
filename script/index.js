@@ -2,7 +2,7 @@ let arrayOfNotes = [];
 let numDownNote = 0;
 
 let listNotes = document.querySelector("#notes");
-let mode = document.querySelector(".mode");
+let showMode = document.querySelector(".mode");
 
 let textarea = document.querySelector(".textarea");
 let button = document.querySelector(".button");
@@ -20,9 +20,8 @@ function saveNote(event) {
     `li[data-key="${numDownNote + 1}"] span`
   );
   activeSpan.classList.remove("active");
-  mode.innerHTML = "Режим создания новой заметки";
 
-  button.dataset.mode = "save";
+  changeMode("save");
   textarea.value = null;
 }
 let updateOldNote = (text) => (arrayOfNotes[numDownNote] = text);
@@ -52,9 +51,11 @@ let createItemLi = (numberLastNote) => {
   listNotes.appendChild(li);
 };
 function showTextNode(event) {
-  button.dataset.mode = "update";
-  this.classList.add("active");
-  mode.innerHTML = "Режим редактирования заметки";
+  changeMode("update");
+
+  let pressNote = this;
+  removeAndAddActiveClass(pressNote);
+
   let li = this.parentElement;
   numDownNote = li.dataset.key - 1;
   let textNote = arrayOfNotes[numDownNote];
@@ -65,3 +66,18 @@ function removeNote(event) {
   let li = this.parentElement;
   li.remove();
 }
+let changeMode = (mode) => {
+  if (mode === "update") {
+    button.dataset.mode = mode;
+    showMode.innerHTML = "Режим редактирования заметки";
+  } else if (mode === "save") {
+    button.dataset.mode = mode;
+    showMode.innerHTML = "Режим создания новой заметки";
+  }
+};
+let removeAndAddActiveClass = (note) => {
+  let activeNote = document.querySelector(".active");
+  if (activeNote) activeNote.classList.remove("active");
+
+  note.classList.add("active");
+};
